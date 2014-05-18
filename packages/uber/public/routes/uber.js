@@ -2,8 +2,8 @@
 
 angular.module('mean').config(['$stateProvider',
     function($stateProvider) {
-        $stateProvider.state('uber example page', {
-            url: '/uber/example',
+        $stateProvider.state('favorites', {
+            url: '/uber/favorites',
             templateUrl: 'uber/views/index.html'
         });
     }

@@ -18,8 +18,8 @@ Uber.register(function(app, auth, database) {
 
     //We are adding a link to the main menu for all authenticated users
     Uber.menus.add({
-        title: 'uber example page',
-        link: 'uber example page',
+        title: 'Favorites',
+        link: 'favorites',
         roles: ['authenticated'],
         menu: 'main'
     });
