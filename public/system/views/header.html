@@ -1,19 +1,19 @@
 <div class="page-header" data-ng-controller="HeaderController">
   <div class="logo pull-left">
-    <a class="navbar-brand" ui-sref="home" mean-token="'site-title'">Uber</a>
+    <a class="navbar-brand" ui-sref="home"><img src="public/system/assets/img/uber-app-icon.jpg" class="brand" alt="Uber" /></a>
   </div>
 
   <div class="left pull-left">
     <ul class="navbar-nav nav">
       <li data-ng-repeat="item in menus.main" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
-          <a mean-token="item.link" ui-sref='{{item.link}}'>{{item.title}}</a>
+          <a ui-sref='{{item.link}}'>{{item.title}}</a>
       </li>
     </ul>
   </div>
 
   <div class="account">
     <div class="text-edit">
-      <div class="pull-right" data-ng-show="global.authenticated" mean-token-editable></div>
+      <div class="pull-right" data-ng-show="global.authenticated"></div>
     </div>
     <ul class="navbar-nav nav" data-ng-hide="global.authenticated">
         <li><a ui-sref='auth.register'>Register</a>

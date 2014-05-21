@@ -1,14 +1,16 @@
 <section data-ng-controller="UberController" data-ng-init="findOne()">
-    <span>{{favorite.created | date:'medium'}}</span> /
-    <span>{{favorite.user.name}}</span>
-    <h2>{{favorite.title}}</h2>
-    <div data-ng-if="hasAuthorization(favorite)">
-        <a class="btn" href="/#!/uber/{{favorite._id}}/edit">
-            <i class="glyphicon glyphicon-edit"></i>
-        </a>
-        <a class="btn" data-ng-click="remove(favorite);">
-            <i class="glyphicon glyphicon-trash"></i>
-        </a>
-    </div>
-    <div>{{favorite.content}}</div>
+    <h2>
+        <a data-ng-href="#!/uber/{{favorite._id}}">{{favorite.name}}</a>
+        <span data-ng-if="hasAuthorization(favorite)">
+            <a class="btn" href="/#!/uber/{{favorite._id}}/edit">
+                <i class="glyphicon glyphicon-edit"></i>
+            </a>
+            <a class="btn" data-ng-click="remove(favorite);">
+                <i class="glyphicon glyphicon-trash"></i>
+            </a>
+        </span>
+    </h2>
+    <div>Added by: {{favorite.user.name}}</div>
+    <div>{{favorite.address}}</div>
+    <google-map center="favorite.center" zoom="favorite.zoom"></google-map>
 </section>

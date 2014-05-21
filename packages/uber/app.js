@@ -20,11 +20,11 @@ Uber.register(function(app, auth, database) {
     Uber.menus.add({
         'roles': ['authenticated'],
         'title': 'Uber',
-        'link': 'all uber'
+        'link': 'all uber',
     });
     Uber.menus.add({
         'roles': ['authenticated'],
-        'title': 'Create New Favorite',
+        'title': 'Create Favorite',
         'link': 'create favorite'
     });
 

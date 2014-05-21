@@ -7,7 +7,6 @@ var mongoose = require('mongoose'),
     Favorite = mongoose.model('Favorite'),
     _ = require('lodash');
 
-
 /**
  * Find favorite by id
  */
@@ -34,7 +33,7 @@ exports.create = function(req, res) {
                 favorite: favorite
             });
         } else {
-            res.jsonp(favorite);
+            res.json(favorite);
         }
     });
 };
@@ -54,7 +53,7 @@ exports.update = function(req, res) {
                 favorite: favorite
             });
         } else {
-            res.jsonp(favorite);
+            res.json(favorite);
         }
     });
 };
@@ -72,7 +71,7 @@ exports.destroy = function(req, res) {
                 favorite: favorite
             });
         } else {
-            res.jsonp(favorite);
+            res.json(favorite);
         }
     });
 };
@@ -81,7 +80,7 @@ exports.destroy = function(req, res) {
  * Show an favorite
  */
 exports.show = function(req, res) {
-    res.jsonp(req.favorite);
+    res.json(req.favorite);
 };
 
 /**
@@ -94,7 +93,7 @@ exports.all = function(req, res) {
                 status: 500
             });
         } else {
-            res.jsonp(uber);
+            res.json(uber);
         }
     });
 };

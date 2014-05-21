@@ -6,24 +6,21 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-
 /**
  * Favorite Schema
  */
 var FavoriteSchema = new Schema({
-    created: {
-        type: Date,
-        default: Date.now
-    },
-    title: {
+    lat: Number,
+    lng: Number,
+    address: {
         type: String,
-        default: '',
-        trim: true
+        trim: true,
+        default: '800 Market Street, San Francisco, CA 94114'
     },
-    content: {
+    name: {
         type: String,
-        default: '',
-        trim: true
+        trim: true,
+        default: 'Work'
     },
     user: {
         type: Schema.ObjectId,
@@ -31,12 +28,12 @@ var FavoriteSchema = new Schema({
     }
 });
 
-/**
- * Validations
- */
-FavoriteSchema.path('title').validate(function(title) {
-    return title.length;
-}, 'Title cannot be blank');
+FavoriteSchema.virtual('center').get(function() {
+    return {
+        latitude: this.lat,
+        longitude: this.lng
+    };
+});
 
 /**
  * Statics

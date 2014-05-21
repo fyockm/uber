@@ -9,17 +9,29 @@ angular.module('mean').controller('UberController', ['$scope', '$stateParams', '
             return $scope.global.isAdmin || favorite.user._id === $scope.global.user._id;
         };
 
+        $scope.options = {
+            watchEnter: true
+        };
+        $scope.details = {
+            geometry: true
+        };
+
         $scope.create = function() {
+            console.log(this.address);
+            console.log(this.options);
+            console.log(this.details);
             var favorite = new Uber({
-                title: this.title,
-                content: this.content
+                address: this.address,
+                name: this.name,
+                lat: this.details.geometry.location.k,
+                lng: this.details.geometry.location.A
             });
             favorite.$save(function(response) {
                 $location.path('uber/' + response._id);
             });
 
-            this.title = '';
-            this.content = '';
+            this.address = '';
+            this.name = '';
         };
 
         $scope.remove = function(favorite) {
@@ -61,6 +73,11 @@ angular.module('mean').controller('UberController', ['$scope', '$stateParams', '
                 favoriteId: $stateParams.favoriteId
             }, function(favorite) {
                 $scope.favorite = favorite;
+                $scope.favorite.center = {
+                    latitude: favorite.lat,
+                    longitude: favorite.lng
+                };
+                $scope.favorite.zoom = 8;
             });
         };
     }

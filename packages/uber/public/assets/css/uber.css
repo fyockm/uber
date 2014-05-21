@@ -4,3 +4,9 @@ h1 {
 ul.uber li:not(:last-child) {
 	border-bottom: 1px solid #ccc
 }
+img.brand {
+	max-width: 20px;
+}
+.angular-google-map-container {
+	height: 400px;
+}
