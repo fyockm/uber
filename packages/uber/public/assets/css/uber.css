@@ -1,3 +1,6 @@
-.uber-example h1: {
-	background-color: purple
+h1 {
+	text-align: center
+}
+ul.uber li:not(:last-child) {
+	border-bottom: 1px solid #ccc
 }

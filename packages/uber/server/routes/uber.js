@@ -1,26 +1,25 @@
 'use strict';
 
-// The Package is past automatically as first parameter
-module.exports = function(Uber, app, auth, database) {
+var uber = require('../controllers/uber');
 
-    app.get('/uber/favorites/anyone', function(req, res, next) {
-        res.send('Anyone can access this');
-    });
+// Favorite authorization helpers
+var hasAuthorization = function(req, res, next) {
+    if (req.user.roles.indexOf('admin') === -1 && req.favorite.user.id !== req.user.id) {
+        return res.send(401, 'User is not authorized');
+    }
+    next();
+};
 
-    app.get('/uber/favorites/auth', auth.requiresLogin, function(req, res, next) {
-        res.send('Only authenticated users can access this');
-    });
+module.exports = function(Uber, app, auth) {
 
-    app.get('/uber/favorites/admin', auth.requiresAdmin, function(req, res, next) {
-        res.send('Only users with Admin role can access this');
-    });
+    app.route('/uber')
+        .get(uber.all)
+        .post(auth.requiresLogin, uber.create);
+    app.route('/uber/:favoriteId')
+        .get(uber.show)
+        .put(auth.requiresLogin, hasAuthorization, uber.update)
+        .delete(auth.requiresLogin, hasAuthorization, uber.destroy);
 
-    app.get('/uber/favorites/render', function(req, res, next) {
-        Uber.render('index', {
-            package: 'uber'
-        }, function(err, html) {
-            //Rendering a view from the Package server/views
-            res.send(html);
-        });
-    });
+    // Finish with setting up the favoriteId param
+    app.param('favoriteId', uber.favorite);
 };

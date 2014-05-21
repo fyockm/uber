@@ -5,7 +5,7 @@
  */
 var Module = require('meanio').Module;
 
-var Uber = new Module('uber');
+var Uber = new Module('Uber');
 
 /*
  * All MEAN packages require registration
@@ -18,33 +18,34 @@ Uber.register(function(app, auth, database) {
 
     //We are adding a link to the main menu for all authenticated users
     Uber.menus.add({
-        title: 'Favorites',
-        link: 'favorites',
-        roles: ['authenticated'],
-        menu: 'main'
+        'roles': ['authenticated'],
+        'title': 'Uber',
+        'link': 'all uber'
+    });
+    Uber.menus.add({
+        'roles': ['authenticated'],
+        'title': 'Create New Favorite',
+        'link': 'create favorite'
     });
 
-    /**
+    /*
     //Uncomment to use. Requires meanio@0.3.7 or above
     // Save settings with callback
     // Use this for saving data from administration pages
-    Uber.settings({
-        'someSetting': 'some value'
-    }, function(err, settings) {
-        //you now have the settings object
+    Uber.settings({'someSetting':'some value'},function (err, settings) {
+      //you now have the settings object
     });
 
     // Another save settings example this time with no callback
     // This writes over the last settings.
-    Uber.settings({
-        'anotherSettings': 'some value'
-    });
+    Uber.settings({'anotherSettings':'some value'});
 
     // Get settings. Retrieves latest saved settigns
-    Uber.settings(function(err, settings) {
-        //you now have the settings object
+    Uber.settings(function (err, settings) {
+      //you now have the settings object
     });
     */
+    Uber.aggregateAsset('css', 'uber.css');
 
     return Uber;
 });

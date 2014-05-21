@@ -1,0 +1,14 @@
+<section data-ng-controller="UberController" data-ng-init="findOne()">
+    <span>{{favorite.created | date:'medium'}}</span> /
+    <span>{{favorite.user.name}}</span>
+    <h2>{{favorite.title}}</h2>
+    <div data-ng-if="hasAuthorization(favorite)">
+        <a class="btn" href="/#!/uber/{{favorite._id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn" data-ng-click="remove(favorite);">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
+    <div>{{favorite.content}}</div>
+</section>

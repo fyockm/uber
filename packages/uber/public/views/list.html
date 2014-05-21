@@ -1,0 +1,21 @@
+<section data-ng-controller="UberController" data-ng-init="find()">
+    <ul class="uber unstyled">
+        <li data-ng-repeat="favorite in uber">
+            <span>{{favorite.created | date:'medium'}}</span> /
+            <span>{{favorite.user.name}}</span>
+            <h2>
+                <a data-ng-href="#!/uber/{{favorite._id}}">{{favorite.title}}</a>
+                <span data-ng-if="hasAuthorization(favorite)">
+                    <a class="btn" href="/#!/uber/{{favorite._id}}/edit">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                    <a class="btn" data-ng-click="remove(favorite);">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </span>
+            </h2>
+            <div>{{favorite.content}}</div>
+        </li>
+    </ul>
+    <h1 data-ng-hide="!uber || uber.length">No uber yet. <br> Why don't you <a href="/#!/uber/create">Create One</a>?</h1>
+</section>
