@@ -34,7 +34,7 @@ angular.module('mean').config(['$stateProvider',
             })
             .state('create favorite', {
                 url: '/uber/create',
-                templateUrl: 'uber/views/create.html',
+                templateUrl: 'uber/views/edit.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
@@ -42,13 +42,6 @@ angular.module('mean').config(['$stateProvider',
             .state('edit favorite', {
                 url: '/uber/:favoriteId/edit',
                 templateUrl: 'uber/views/edit.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-            .state('favorite by id', {
-                url: '/uber/:favoriteId',
-                templateUrl: 'uber/views/view.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }

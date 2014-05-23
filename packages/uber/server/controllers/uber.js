@@ -20,29 +20,11 @@ exports.favorite = function(req, res, next, id) {
 };
 
 /**
- * Create an favorite
+ * Upsert a favorite
  */
-exports.create = function(req, res) {
-    var favorite = new Favorite(req.body);
-    favorite.user = req.user;
-
-    favorite.save(function(err) {
-        if (err) {
-            return res.send('users/signup', {
-                errors: err.errors,
-                favorite: favorite
-            });
-        } else {
-            res.json(favorite);
-        }
-    });
-};
-
-/**
- * Update an favorite
- */
-exports.update = function(req, res) {
-    var favorite = req.favorite;
+exports.upsert = function(req, res) {
+    var favorite = req.favorite || new Favorite(req.body);
+    favorite.user = favorite.user || req.user;
 
     favorite = _.extend(favorite, req.body);
 
@@ -59,7 +41,7 @@ exports.update = function(req, res) {
 };
 
 /**
- * Delete an favorite
+ * Delete a favorite
  */
 exports.destroy = function(req, res) {
     var favorite = req.favorite;
@@ -77,14 +59,14 @@ exports.destroy = function(req, res) {
 };
 
 /**
- * Show an favorite
+ * Show a favorite
  */
 exports.show = function(req, res) {
     res.json(req.favorite);
 };
 
 /**
- * List of Uber
+ * List of Uber favorites
  */
 exports.all = function(req, res) {
     Favorite.find().sort('-created').populate('user', 'name username').exec(function(err, uber) {

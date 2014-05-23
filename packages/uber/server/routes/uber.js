@@ -14,10 +14,10 @@ module.exports = function(Uber, app, auth) {
 
     app.route('/uber')
         .get(uber.all)
-        .post(auth.requiresLogin, uber.create);
+        .post(auth.requiresLogin, uber.upsert);
     app.route('/uber/:favoriteId')
         .get(uber.show)
-        .put(auth.requiresLogin, hasAuthorization, uber.update)
+        .put(auth.requiresLogin, hasAuthorization, uber.upsert)
         .delete(auth.requiresLogin, hasAuthorization, uber.destroy);
 
     // Finish with setting up the favoriteId param

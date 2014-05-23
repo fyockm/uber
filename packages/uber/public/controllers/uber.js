@@ -9,13 +9,15 @@ angular.module('mean').controller('UberController', ['$scope', '$stateParams', '
             return $scope.global.isAdmin || favorite.user._id === $scope.global.user._id;
         };
 
-        $scope.acOptions = {
-            watchEnter: true
-        };
-        $scope.acDetails = {
-            geometry: true
-        };
         angular.extend($scope, {
+            auto: {
+                options: {
+                    watchEnter: true
+                },
+                details: {
+                    geometry: true
+                }
+            },
             favorite: {
                 center: {},
                 markers: {}
@@ -25,32 +27,27 @@ angular.module('mean').controller('UberController', ['$scope', '$stateParams', '
             }
         });
 
-        $scope.create = function() {
-            if (!this.acDetails.geometry.location) return;
-            var favorite = new Uber({
-                address: this.address,
-                name: this.name,
-                lat: this.acDetails.geometry.location.k,
-                lng: this.acDetails.geometry.location.A
-            });
-            favorite.$save(function(response) {
-                $location.path('uber/' + response._id);
-            });
-
-            this.address = '';
-            this.name = '';
-        };
-
-        $scope.update = function() {
-            var favorite = $scope.favorite;
-            if (!favorite.updated) {
-                favorite.updated = [];
+        $scope.upsert = function() {
+            var favorite = {};
+            if ($stateParams.favoriteId) {
+                favorite = $scope.favorite;
+                favorite.updated = favorite.updated || [];
+                favorite.updated.push(new Date().getTime());
+                favorite.$update(function() {
+                    $location.path('uber');
+                });
+            } else {
+                favorite = new Uber({
+                    address: this.favorite.address,
+                    name: this.favorite.name,
+                    lat: this.auto.details.geometry.location ? this.auto.details.geometry.location.k : null,
+                    lng: this.auto.details.geometry.location ? this.auto.details.geometry.location.A : null
+                });
+                if (!favorite.lat || !favorite.lng) return;
+                favorite.$save(function() {
+                    $location.path('uber');
+                });
             }
-            favorite.updated.push(new Date().getTime());
-
-            favorite.$update(function() {
-                $location.path('uber/' + favorite._id);
-            });
         };
 
         $scope.remove = function(favorite) {
@@ -93,25 +90,13 @@ angular.module('mean').controller('UberController', ['$scope', '$stateParams', '
         };
 
         $scope.findOne = function() {
-            Uber.get({
-                favoriteId: $stateParams.favoriteId
-            }, function(favorite) {
-                $scope.favorite = favorite;
-                $scope.favorite.center = {
-                    lat: favorite.lat,
-                    lng: favorite.lng,
-                    zoom: 16
-                };
-                $scope.favorite.markers = {
-                    mainMarker: {
-                        lat: favorite.lat,
-                        lng: favorite.lng,
-                        focus: true,
-                        message: favorite.name,
-                        draggable: false
-                    }
-                };
-            });
+            if ($stateParams.favoriteId) {
+                Uber.get({
+                    favoriteId: $stateParams.favoriteId
+                }, function(favorite) {
+                    $scope.favorite = favorite;
+                });
+            }
         };
     }
 ]);

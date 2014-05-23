@@ -2,7 +2,7 @@
     <ul class="uber list-unstyled">
         <li data-ng-repeat="favorite in uber">
             <h2>
-                <a data-ng-href="#!/uber/{{favorite._id}}">{{favorite.name}}</a>
+                {{favorite.name}}
                 <span data-ng-if="hasAuthorization(favorite)">
                     <a class="btn" href="/#!/uber/{{favorite._id}}/edit">
                         <i class="glyphicon glyphicon-edit"></i>
