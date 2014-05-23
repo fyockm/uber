@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    db: 'mongodb://localhost/uber-prod',
+    db: 'mongodb://uber:jobs@oceanic.mongohq.com:10093/uber-prod',
     app: {
         name: 'Uber Favorites - Production'
     },
