@@ -12,25 +12,25 @@ Using the language (Python preferred), libraries and data store of your choosing
 
 Attributes of a favorite location object include:
 
-id
-lat
-lng
-address (e.g. 800 Market Street, San Francisco, CA 94114)
-name (e.g. Work)
+- id
+- lat
+- lng
+- address (e.g. 800 Market Street, San Francisco, CA 94114)
+- name (e.g. Work)
 
 ## Frontend
 
 Using JavaScript, Backbone.js (preferred) and any other libraries of your choosing, create an interface to access the API. User should be able to:
 
-Create a new location
-Read/view a location, and a collection of all locations
-Update an existing location
-Delete a location
+- Create a new location
+- Read/view a location, and a collection of all locations
+- Update an existing location
+- Delete a location
 
 The UX is up to you, with a couple of constraints:
 
-Incorporate a map
-Geocode the address so the user is not required to enter lat/lng
+- Incorporate a map
+- Geocode the address so the user is not required to enter lat/lng
 
 
 ## Requirements
