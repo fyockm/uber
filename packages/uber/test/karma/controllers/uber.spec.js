@@ -48,22 +48,20 @@
 
             it('$scope.find() should create an array with at least one favorite object ' +
                 'fetched from XHR', function() {
-
-                    // test expected GET request
-                    $httpBackend.expectGET('uber').respond([{
+                    var favorite = {
                         address: '800 Market Street, San Francisco, CA 94114',
                         name: 'Work'
-                    }]);
+                    };
+
+                    // test expected GET request
+                    $httpBackend.expectGET('uber').respond([favorite]);
 
                     // run controller
                     scope.find();
                     $httpBackend.flush();
 
                     // test scope value
-                    expect(scope.uber).toEqualData([{
-                        address: '800 Market Street, San Francisco, CA 94114',
-                        name: 'Work'
-                    }]);
+                    expect(scope.uber).toEqualData([favorite]);
 
                 });
 
@@ -92,47 +90,58 @@
 
                 });
 
-            it('$scope.create() with valid form data should send a POST request ' +
-                'with the form input values and then ' +
-                'locate to new object URL', function() {
+            it('$scope.upsert() with valid form data should send a POST request ' +
+                'with the form input values and then locate to list', function() {
+                    // fixture URL parament
+                    $stateParams.favoriteId = '';
 
                     // fixture expected POST data
                     var postFavoriteData = function() {
                         return {
-                            address: '800 Market Street, San Francisco, CA 94114',
-                            name: 'Work'
+                            favorite: {
+                                address: '800 Market Street, San Francisco, CA 94114',
+                                name: 'Work',
+                                lat: 37.7854699,
+                                lng: -122.40661599999999
+                            }
                         };
                     };
 
                     // fixture expected response data
                     var responseFavoriteData = function() {
                         return {
-                            _id: '525cf20451979dea2c000001',
-                            address: '800 Market Street, San Francisco, CA 94114',
-                            name: 'Work'
+                            favorite: {
+                                _id: '525cf20451979dea2c000001',
+                                address: '800 Market Street, San Francisco, CA 94114',
+                                name: 'Work',
+                                lat: 37.7854699,
+                                lng: -122.40661599999999
+                            }
                         };
                     };
 
                     // fixture mock form input values
-                    scope.title = 'An Favorite about MEAN';
-                    scope.content = 'MEAN rocks!';
+                    scope.address = '800 Market Street, San Francisco, CA 94114';
+                    scope.name = 'Work';
 
                     // test post request is sent
                     $httpBackend.expectPOST('uber', postFavoriteData()).respond(responseFavoriteData());
 
                     // Run controller
-                    scope.create();
+                    scope.upsert();
                     $httpBackend.flush();
 
                     // test form input(s) are reset
-                    expect(scope.title).toEqual('');
-                    expect(scope.content).toEqual('');
+                    expect(scope.address).toEqual('');
+                    expect(scope.name).toEqual('');
 
                     // test URL location to new object
-                    expect($location.path()).toBe('/uber/' + responseFavoriteData()._id);
+                    expect($location.path()).toBe('/uber');
                 });
 
-            it('$scope.update() should update a valid favorite', inject(function(Uber) {
+            it('$scope.upsert() should update a valid favorite', inject(function(Uber) {
+                // fixture URL parament
+                $stateParams.favoriteId = '525a8422f6d0f87f0e407a33';
 
                 // fixture rideshare
                 var putFavoriteData = function() {
@@ -153,11 +162,11 @@
                 $httpBackend.expectPUT(/uber\/([0-9a-fA-F]{24})$/).respond();
 
                 // run controller
-                scope.update();
+                scope.upsert();
                 $httpBackend.flush();
 
                 // test URL location to new object
-                expect($location.path()).toBe('/uber/' + putFavoriteData()._id);
+                expect($location.path()).toBe('/uber');
 
             }));
 

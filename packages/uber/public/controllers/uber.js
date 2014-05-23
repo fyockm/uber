@@ -37,13 +37,15 @@ angular.module('mean').controller('UberController', ['$scope', '$stateParams', '
                     $location.path('uber');
                 });
             } else {
+                console.log('this', this);
                 favorite = new Uber({
                     address: this.favorite.address,
                     name: this.favorite.name,
-                    lat: this.auto.details.geometry.location ? this.auto.details.geometry.location.k : null,
-                    lng: this.auto.details.geometry.location ? this.auto.details.geometry.location.A : null
+                    lat: this.auto.details.geometry.location ? this.auto.details.geometry.location.k : this.favorite.lat,
+                    lng: this.auto.details.geometry.location ? this.auto.details.geometry.location.A : this.favorite.lng
                 });
-                if (!favorite.lat || !favorite.lng) return;
+                console.log('fav', favorite);
+
                 favorite.$save(function() {
                     $location.path('uber');
                 });
@@ -71,20 +73,23 @@ angular.module('mean').controller('UberController', ['$scope', '$stateParams', '
                 $scope.uber = uber;
 
                 for (var i in $scope.uber) {
-                    $scope.uber[i].center = {
-                        lat: $scope.uber[i].lat,
-                        lng: $scope.uber[i].lng,
-                        zoom: 16
-                    };
-                    $scope.uber[i].markers = {
-                        mainMarker: {
+                    if ($scope.uber[i].lat && $scope.uber[i].lng) {
+                        $scope.uber[i].center = {
                             lat: $scope.uber[i].lat,
                             lng: $scope.uber[i].lng,
-                            focus: true,
-                            message: $scope.uber[i].name,
-                            draggable: false
-                        }
-                    };
+                            zoom: 16
+                        };
+                        $scope.uber[i].markers = {
+                            mainMarker: {
+                                lat: $scope.uber[i].lat,
+                                lng: $scope.uber[i].lng,
+                                focus: true,
+                                message: $scope.uber[i].name,
+                                draggable: false
+                            }
+                        };
+                    }
+
                 }
             });
         };
