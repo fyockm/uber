@@ -37,15 +37,13 @@ angular.module('mean').controller('UberController', ['$scope', '$stateParams', '
                     $location.path('uber');
                 });
             } else {
-                console.log('this', this);
                 favorite = new Uber({
                     address: this.favorite.address,
                     name: this.favorite.name,
                     lat: this.auto.details.geometry.location ? this.auto.details.geometry.location.k : this.favorite.lat,
                     lng: this.auto.details.geometry.location ? this.auto.details.geometry.location.A : this.favorite.lng
                 });
-                console.log('fav', favorite);
-
+                if (!favorite.lat || !favorite.lng) return;
                 favorite.$save(function() {
                     $location.path('uber');
                 });
