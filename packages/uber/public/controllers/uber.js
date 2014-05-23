@@ -16,15 +16,17 @@ angular.module('mean').controller('UberController', ['$scope', '$stateParams', '
             geometry: true
         };
         angular.extend($scope, {
-            center: {},
-            markers: {},
+            favorite: {
+                center: {},
+                markers: {}
+            },
             defaults: {
                 scrollWheelZoom: false
             }
         });
 
         $scope.create = function() {
-            //if (!this.acDetails.geometry.location) return;
+            if (!this.acDetails.geometry.location) return;
             var favorite = new Uber({
                 address: this.address,
                 name: this.name,
@@ -37,6 +39,18 @@ angular.module('mean').controller('UberController', ['$scope', '$stateParams', '
 
             this.address = '';
             this.name = '';
+        };
+
+        $scope.update = function() {
+            var favorite = $scope.favorite;
+            if (!favorite.updated) {
+                favorite.updated = [];
+            }
+            favorite.updated.push(new Date().getTime());
+
+            favorite.$update(function() {
+                $location.path('uber/' + favorite._id);
+            });
         };
 
         $scope.remove = function(favorite) {
@@ -55,21 +69,26 @@ angular.module('mean').controller('UberController', ['$scope', '$stateParams', '
             }
         };
 
-        $scope.update = function() {
-            var favorite = $scope.favorite;
-            if (!favorite.updated) {
-                favorite.updated = [];
-            }
-            favorite.updated.push(new Date().getTime());
-
-            favorite.$update(function() {
-                $location.path('uber/' + favorite._id);
-            });
-        };
-
         $scope.find = function() {
             Uber.query(function(uber) {
                 $scope.uber = uber;
+
+                for (var i in $scope.uber) {
+                    $scope.uber[i].center = {
+                        lat: $scope.uber[i].lat,
+                        lng: $scope.uber[i].lng,
+                        zoom: 16
+                    };
+                    $scope.uber[i].markers = {
+                        mainMarker: {
+                            lat: $scope.uber[i].lat,
+                            lng: $scope.uber[i].lng,
+                            focus: true,
+                            message: $scope.uber[i].name,
+                            draggable: false
+                        }
+                    };
+                }
             });
         };
 
@@ -78,12 +97,12 @@ angular.module('mean').controller('UberController', ['$scope', '$stateParams', '
                 favoriteId: $stateParams.favoriteId
             }, function(favorite) {
                 $scope.favorite = favorite;
-                $scope.center = {
+                $scope.favorite.center = {
                     lat: favorite.lat,
                     lng: favorite.lng,
                     zoom: 16
                 };
-                $scope.markers = {
+                $scope.favorite.markers = {
                     mainMarker: {
                         lat: favorite.lat,
                         lng: favorite.lng,

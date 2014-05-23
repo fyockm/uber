@@ -14,6 +14,7 @@
             </h2>
             <div>Added by: {{favorite.user.name}}</div>
             <div>{{favorite.address}}</div>
+            <leaflet class="map" defaults="defaults" center="favorite.center" markers="favorite.markers"></leaflet>
         </li>
     </ul>
     <h1 data-ng-hide="!uber || uber.length">No favorites yet. <br> Why don't you <a href="/#!/uber/create">Create One</a>?</h1>
