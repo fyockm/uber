@@ -51,8 +51,8 @@
 
                     // test expected GET request
                     $httpBackend.expectGET('uber').respond([{
-                        title: 'An Favorite about MEAN',
-                        content: 'MEAN rocks!'
+                        address: '800 Market Street, San Francisco, CA 94114',
+                        name: 'Work'
                     }]);
 
                     // run controller
@@ -61,8 +61,8 @@
 
                     // test scope value
                     expect(scope.uber).toEqualData([{
-                        title: 'An Favorite about MEAN',
-                        content: 'MEAN rocks!'
+                        address: '800 Market Street, San Francisco, CA 94114',
+                        name: 'Work'
                     }]);
 
                 });
@@ -75,8 +75,8 @@
                     // fixture response object
                     var testFavoriteData = function() {
                         return {
-                            title: 'An Favorite about MEAN',
-                            content: 'MEAN rocks!'
+                            address: '800 Market Street, San Francisco, CA 94114',
+                            name: 'Work'
                         };
                     };
 
@@ -99,8 +99,8 @@
                     // fixture expected POST data
                     var postFavoriteData = function() {
                         return {
-                            title: 'An Favorite about MEAN',
-                            content: 'MEAN rocks!'
+                            address: '800 Market Street, San Francisco, CA 94114',
+                            name: 'Work'
                         };
                     };
 
@@ -108,8 +108,8 @@
                     var responseFavoriteData = function() {
                         return {
                             _id: '525cf20451979dea2c000001',
-                            title: 'An Favorite about MEAN',
-                            content: 'MEAN rocks!'
+                            address: '800 Market Street, San Francisco, CA 94114',
+                            name: 'Work'
                         };
                     };
 
@@ -138,8 +138,8 @@
                 var putFavoriteData = function() {
                     return {
                         _id: '525a8422f6d0f87f0e407a33',
-                        title: 'An Favorite about MEAN',
-                        to: 'MEAN is great!'
+                        address: '800 Market Street, San Francisco, CA 94114',
+                        name: 'Work'
                     };
                 };
 
@@ -151,14 +151,6 @@
 
                 // test PUT happens correctly
                 $httpBackend.expectPUT(/uber\/([0-9a-fA-F]{24})$/).respond();
-
-                // testing the body data is out for now until an idea for testing the dynamic updated array value is figured out
-                //$httpBackend.expectPUT(/uber\/([0-9a-fA-F]{24})$/, putFavoriteData()).respond();
-                /*
-                Error: Expected PUT /uber\/([0-9a-fA-F]{24})$/ with different data
-                EXPECTED: {"_id":"525a8422f6d0f87f0e407a33","title":"An Favorite about MEAN","to":"MEAN is great!"}
-                GOT:      {"_id":"525a8422f6d0f87f0e407a33","title":"An Favorite about MEAN","to":"MEAN is great!","updated":[1383534772975]}
-                */
 
                 // run controller
                 scope.update();

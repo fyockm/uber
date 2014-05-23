@@ -15,24 +15,17 @@ var FavoriteSchema = new Schema({
     address: {
         type: String,
         trim: true,
-        default: '800 Market Street, San Francisco, CA 94114'
+        required: true
     },
     name: {
         type: String,
         trim: true,
-        default: 'Work'
+        required: true
     },
     user: {
         type: Schema.ObjectId,
         ref: 'User'
     }
-});
-
-FavoriteSchema.virtual('center').get(function() {
-    return {
-        latitude: this.lat,
-        longitude: this.lng
-    };
 });
 
 /**

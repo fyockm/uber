@@ -9,22 +9,27 @@ angular.module('mean').controller('UberController', ['$scope', '$stateParams', '
             return $scope.global.isAdmin || favorite.user._id === $scope.global.user._id;
         };
 
-        $scope.options = {
+        $scope.acOptions = {
             watchEnter: true
         };
-        $scope.details = {
+        $scope.acDetails = {
             geometry: true
         };
+        angular.extend($scope, {
+            center: {},
+            markers: {},
+            defaults: {
+                scrollWheelZoom: false
+            }
+        });
 
         $scope.create = function() {
-            console.log(this.address);
-            console.log(this.options);
-            console.log(this.details);
+            //if (!this.acDetails.geometry.location) return;
             var favorite = new Uber({
                 address: this.address,
                 name: this.name,
-                lat: this.details.geometry.location.k,
-                lng: this.details.geometry.location.A
+                lat: this.acDetails.geometry.location.k,
+                lng: this.acDetails.geometry.location.A
             });
             favorite.$save(function(response) {
                 $location.path('uber/' + response._id);
@@ -73,11 +78,20 @@ angular.module('mean').controller('UberController', ['$scope', '$stateParams', '
                 favoriteId: $stateParams.favoriteId
             }, function(favorite) {
                 $scope.favorite = favorite;
-                $scope.favorite.center = {
-                    latitude: favorite.lat,
-                    longitude: favorite.lng
+                $scope.center = {
+                    lat: favorite.lat,
+                    lng: favorite.lng,
+                    zoom: 16
                 };
-                $scope.favorite.zoom = 8;
+                $scope.markers = {
+                    mainMarker: {
+                        lat: favorite.lat,
+                        lng: favorite.lng,
+                        focus: true,
+                        message: favorite.name,
+                        draggable: false
+                    }
+                };
             });
         };
     }

@@ -1,6 +1,7 @@
 {
     "css": {
         "public/build/css/dist.min.css": [
+            "public/system/lib/leaflet-dist/leaflet.css",
             "public/**/assets/css/*.css"
         ]
     },
@@ -15,9 +16,9 @@
             "public/system/lib/angular-bootstrap/ui-bootstrap.js",
             "public/system/lib/angular-bootstrap/ui-bootstrap-tpls.js",
             "//maps.googleapis.com/maps/api/js?libraries=places&sensor=false",
-            "public/system/lib/lodash/dist/lodash.compat.js",
-            "public/system/lib/angular-google-maps/dist/angular-google-maps.js",
             "public/system/lib/ngAutocomplete/src/ngAutocomplete.js",
+            "public/system/lib/leaflet-dist/leaflet.js",
+            "public/system/lib/angular-leaflet/dist/angular-leaflet-directive.js",
             "public/init.js",
             "public/*/*.js",
             "public/*/{controllers,routes,services}/*.js"

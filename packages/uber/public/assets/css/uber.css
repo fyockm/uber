@@ -1,12 +1,15 @@
 h1 {
-	text-align: center
+	text-align: center;
 }
 ul.uber li:not(:last-child) {
-	border-bottom: 1px solid #ccc
+  padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
 }
 img.brand {
 	max-width: 20px;
 }
-.angular-google-map-container {
-	height: 400px;
+.map {
+  height: 400px;
+  width: 600px;
+  margin: 10px;
 }

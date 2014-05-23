@@ -6,7 +6,6 @@ angular.element(document).ready(function() {
 
     //Then init the app
     angular.bootstrap(document, ['mean']);
-
 });
 
 // Dynamically add angular modules declared by packages
@@ -17,7 +16,7 @@ for (var index in window.modules) {
 }
 
 // Default modules
-var modules = ['ngCookies', 'ngResource', 'ngAutocomplete', 'ui.bootstrap', 'ui.router', 'google-maps', 'mean.system', 'mean.auth'];
+var modules = ['ngCookies', 'ngResource', 'ngAutocomplete', 'ui.bootstrap', 'ui.router', 'leaflet-directive', 'mean.system', 'mean.auth'];
 modules = modules.concat(packageModules);
 
 // Combined modules

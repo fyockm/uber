@@ -1,7 +1,7 @@
 'use strict';
 
 // there has to be a better way to bootstrap package models for mocha tests
-require('../../../server/models/favorite');
+require('../../../server/models/uber');
 
 /**
  * Module dependencies.
@@ -28,8 +28,10 @@ describe('<Unit Test>', function() {
 
             user.save(function() {
                 favorite = new Favorite({
-                    title: 'Favorite Title',
-                    content: 'Favorite Content',
+                    address: '800 Market Street, San Francisco, CA 94114',
+                    name: 'Uber',
+                    lat: 37.7854699,
+                    lng: -122.40661599999999,
                     user: user
                 });
 
@@ -44,9 +46,18 @@ describe('<Unit Test>', function() {
                     done();
                 });
             });
+            
+            it('should be able to show an error when try to save without address', function(done) {
+                favorite.address = '';
 
-            it('should be able to show an error when try to save without title', function(done) {
-                favorite.title = '';
+                return favorite.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should be able to show an error when try to save without name', function(done) {
+                favorite.name = '';
 
                 return favorite.save(function(err) {
                     should.exist(err);
