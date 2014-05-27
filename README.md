@@ -54,8 +54,9 @@ The UX is up to you, with a couple of constraints:
 grunt
 ```
 
-## Documentation
+## Info
 
+Based upon [mean.io](http://mean.io), of which I am a core contributor.
 
 ## Issues
 
