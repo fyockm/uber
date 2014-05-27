@@ -27,6 +27,8 @@ Uber.register(function(app, auth, database) {
         'title': 'Create Favorite',
         'link': 'create favorite'
     });
+    
+    Uber.angularDependencies(['ngAutocomplete', 'leaflet-directive']);
 
     /*
     //Uncomment to use. Requires meanio@0.3.7 or above
